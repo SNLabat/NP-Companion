@@ -1,4 +1,4 @@
-# NoPixel Social
+# NP Companion
 
 An unofficial, read-only mirror of the in-city **Twatter** feed from the NoPixel V Companion, rebuilt on Next.js for Vercel. Browse the city feed, threads, character profiles and city news, follow characters, bookmark posts, and see which characters are live on Twitch.
 
