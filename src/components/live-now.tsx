@@ -62,11 +62,11 @@ export function LiveNow({ limit, full }: { limit?: number; full?: boolean }) {
 
   return (
     <section className="rounded-2xl border border-line bg-surface p-3" aria-labelledby="live-now">
-      <div className="mb-1 flex items-baseline justify-between px-2">
-        <h2 id="live-now" className="font-display text-xl font-bold uppercase">
+      <div className="mb-1 px-2">
+        <h2 id="live-now" className="whitespace-nowrap font-display text-xl font-bold uppercase">
           Live in the city
         </h2>
-        <span className="text-xs text-muted">
+        <span className="block text-xs text-muted">
           {data.streams.length} streams · {n(total)} viewers
         </span>
       </div>
