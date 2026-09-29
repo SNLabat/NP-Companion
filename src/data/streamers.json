@@ -1,0 +1,4 @@
+{
+  "$comment": "Map Twatter usernames (in-game handles) to the Twitch login of the streamer who plays that character. Case-insensitive. Add entries via PR, or use the Supabase streamer_links table for edits without a redeploy.",
+  "links": []
+}
