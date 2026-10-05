@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, Bookmark, Home, Newspaper, Radio, Search, Settings, Users } from "lucide-react";
+import { Bell, Bookmark, Home, MonitorPlay, Newspaper, Radio, Search, Settings, Users } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
@@ -17,13 +17,14 @@ const NAV: NavItem[] = [
   { href: "/social?tab=bookmarks", label: "Bookmarks", icon: Bookmark, match: (p, t) => p === "/social" && t === "bookmarks" },
   { href: "/news", label: "News", icon: Newspaper, match: (p) => p.startsWith("/news") },
   { href: "/live", label: "Live", icon: Radio, match: (p) => p.startsWith("/live") },
+  { href: "/watch", label: "Multistream", icon: MonitorPlay, match: (p) => p.startsWith("/watch") },
   { href: "/social/search", label: "Search", icon: Search, match: (p) => p.startsWith("/social/search") },
   { href: "/settings", label: "Settings", icon: Settings, match: (p) => p.startsWith("/settings") },
 ];
 
-const MOBILE = ["City", "Following", "News", "Live", "Search"];
+const MOBILE = ["City", "Following", "News", "Live", "Multistream"];
 
-function Nav({ mobile }: { mobile?: boolean }) {
+function Nav({ mobile, compact }: { mobile?: boolean; compact?: boolean }) {
   const pathname = usePathname();
   const tab = useSearchParams().get("tab");
   const items = mobile ? NAV.filter((n) => MOBILE.includes(n.label)) : NAV;
@@ -41,7 +42,18 @@ function Nav({ mobile }: { mobile?: boolean }) {
             className={`flex flex-1 flex-col items-center gap-0.5 py-2 text-[11px] ${active ? "text-brand" : "text-muted"}`}
           >
             <Icon size={22} strokeWidth={active ? 2.4 : 1.8} />
-            {label}
+            {label === "Multistream" ? "Watch" : label}
+          </Link>
+        ) : compact ? (
+          <Link
+            key={href}
+            href={href}
+            aria-label={label}
+            title={label}
+            aria-current={active ? "page" : undefined}
+            className={`grid place-items-center rounded-xl p-2.5 transition-colors hover:bg-surface-2 ${active ? "text-brand" : "text-muted"}`}
+          >
+            <Icon size={22} strokeWidth={active ? 2.4 : 1.8} />
           </Link>
         ) : (
           <Link
@@ -73,6 +85,35 @@ function Logo() {
 }
 
 export function AppShell({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+
+  // Multistream needs the whole viewport: icon rail, no right column.
+  if (pathname.startsWith("/watch")) {
+    return (
+      <div className="flex h-dvh">
+        <aside className="hidden w-16 shrink-0 flex-col items-center gap-1 border-r border-line py-3 md:flex">
+          <Link href="/social" aria-label={SITE_NAME} className="mb-2 grid size-10 place-items-center rounded-xl bg-brand text-white">
+            <Bell size={18} strokeWidth={2.4} />
+          </Link>
+          <nav className="flex flex-col gap-1" aria-label="Main">
+            <Suspense>
+              <Nav compact />
+            </Suspense>
+          </nav>
+        </aside>
+        <main className="min-w-0 flex-1 pb-16 md:pb-0">{children}</main>
+        <nav
+          aria-label="Main"
+          className="fixed inset-x-0 bottom-0 z-40 flex border-t border-line bg-surface/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden"
+        >
+          <Suspense>
+            <Nav mobile />
+          </Suspense>
+        </nav>
+      </div>
+    );
+  }
+
   return (
     <div className="mx-auto flex min-h-dvh max-w-[1280px]">
       {/* left rail */}

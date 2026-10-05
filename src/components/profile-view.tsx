@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { Radio } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import { Avatar } from "@/components/avatar";
 import { useLibrary } from "@/components/library";
@@ -75,10 +76,8 @@ export function ProfileView({ username, initialUser }: { username: string; initi
         <p className="text-muted">@{user.username}</p>
 
         {stream && (
-          <a
-            href={`https://twitch.tv/${stream.login}`}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href={`/watch?s=${stream.login}`}
             className="mt-3 flex items-center gap-3 rounded-xl border border-live/40 bg-live/5 p-3 hover:bg-live/10"
           >
             <Radio className="shrink-0 text-live" size={20} />
@@ -88,7 +87,8 @@ export function ProfileView({ username, initialUser }: { username: string; initi
               </span>
               <span className="block truncate text-sm text-muted">{stream.title}</span>
             </span>
-          </a>
+            <span className="ml-auto shrink-0 rounded-full bg-live px-3 py-1 text-sm font-semibold text-white">Watch</span>
+          </Link>
         )}
       </section>
 

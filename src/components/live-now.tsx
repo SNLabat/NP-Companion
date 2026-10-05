@@ -26,10 +26,9 @@ export function LiveNow({ limit, full }: { limit?: number; full?: boolean }) {
     <ul className={full ? "grid gap-3 p-4 sm:grid-cols-2" : "flex flex-col"}>
       {streams.map((s) => (
         <li key={s.login}>
-          <a
-            href={`https://twitch.tv/${s.login}`}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href={`/watch?s=${s.login}`}
+            title={`Watch ${s.displayName}`}
             className={
               full
                 ? "block overflow-hidden rounded-xl border border-line bg-surface transition hover:border-brand"
@@ -50,7 +49,7 @@ export function LiveNow({ limit, full }: { limit?: number; full?: boolean }) {
               </div>
               <p className="truncate text-sm text-muted">{s.title}</p>
             </div>
-          </a>
+          </Link>
         </li>
       ))}
     </ul>
@@ -71,11 +70,23 @@ export function LiveNow({ limit, full }: { limit?: number; full?: boolean }) {
         </span>
       </div>
       {streams.length ? list : <p className="px-2 py-3 text-sm text-muted">Nobody&apos;s live right now.</p>}
-      {data.streams.length > (limit ?? 0) && (
-        <Link href="/live" className="block px-2 pt-2 text-sm text-brand hover:underline">
-          See all live streams
-        </Link>
-      )}
+      <div className="flex justify-between px-2 pt-2 text-sm">
+        {data.streams.length > (limit ?? 0) ? (
+          <Link href="/live" className="text-brand hover:underline">
+            See all live
+          </Link>
+        ) : (
+          <span />
+        )}
+        {data.streams.length > 1 && (
+          <Link
+            href={`/watch?s=${data.streams.slice(0, 4).map((s) => s.login).join(",")}`}
+            className="font-semibold text-brand hover:underline"
+          >
+            Multistream top 4
+          </Link>
+        )}
+      </div>
     </section>
   );
 }

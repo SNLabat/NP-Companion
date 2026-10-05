@@ -20,6 +20,17 @@ An unofficial, read-only mirror of the in-city **Twatter** feed from the NoPixel
 | SEO | Title only | Metadata, canonicals, sitemap of hot posts/profiles, robots, manifest |
 | Caching | Browser only | Next data cache + Vercel CDN (`s-maxage`) in front of the upstream |
 
+## Multistream (`/watch`)
+
+Watch up to 12 Twitch or Kick POVs at once.
+
+- **Grid or stage** layouts; any tile can be promoted to the main stage.
+- **One audio source** at a time (click the speaker on a tile). Twitch players switch audio through the Twitch Embed API without reloading; Kick's player has no API, so switching to a Kick POV reloads it.
+- **Chat panel** for any POV (Twitch embed chat, or Kick popout chat with a new-window fallback).
+- **Shareable**: the setup lives in the URL, e.g. `/watch?s=buddha,youngmulti,k:somechannel&layout=stage&main=t:buddha`. Bare names are Twitch; `k:` marks Kick. Pasted twitch.tv / kick.com links also work.
+- Add POVs from the live NoPixel list or by name. LIVE badges, the live rail, and profile banners open the stream here.
+- Players are positioned absolutely and never re-ordered in the DOM, so changing layouts never reloads a stream.
+
 ## Architecture
 
 ```
