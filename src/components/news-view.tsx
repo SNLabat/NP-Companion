@@ -39,6 +39,16 @@ export function NewsView() {
 
   const items = q.data?.pages.flatMap((p) => p.items) ?? [];
 
+  // Deep links (/news#<id>, e.g. from the map): load a few pages if needed, then scroll to the story.
+  const pagesTried = q.data?.pages.length ?? 0;
+  useEffect(() => {
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    if (!id || !q.data) return;
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start" });
+    else if (q.hasNextPage && !q.isFetchingNextPage && pagesTried < 4) q.fetchNextPage();
+  }, [q, pagesTried]);
+
   return (
     <>
       <PageHeader title="City news" subtitle="Bulletins, public notices and breaking news" />
@@ -56,7 +66,7 @@ export function NewsView() {
             };
             const Icon = cat.icon;
             return (
-              <article key={item.id} className="rounded-2xl border border-line bg-surface p-4 shadow-[var(--shadow)]">
+              <article key={item.id} id={item.id} className="scroll-mt-20 rounded-2xl target:ring-2 target:ring-brand border border-line bg-surface p-4 shadow-[var(--shadow)]">
                 <div className="mb-2 flex items-center gap-2 text-xs">
                   <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 font-semibold uppercase ${cat.className}`}>
                     <Icon size={12} /> {cat.label}

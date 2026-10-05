@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, Bookmark, Home, MonitorPlay, Newspaper, Radio, Search, Settings, Users } from "lucide-react";
+import { Bell, Bookmark, Home, Map as MapIcon, MonitorPlay, Newspaper, Radio, Search, Settings, Users } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
@@ -16,13 +16,14 @@ const NAV: NavItem[] = [
   { href: "/social?tab=following", label: "Following", icon: Users, match: (p, t) => p === "/social" && t === "following" },
   { href: "/social?tab=bookmarks", label: "Bookmarks", icon: Bookmark, match: (p, t) => p === "/social" && t === "bookmarks" },
   { href: "/news", label: "News", icon: Newspaper, match: (p) => p.startsWith("/news") },
+  { href: "/map", label: "Map", icon: MapIcon, match: (p) => p.startsWith("/map") },
   { href: "/live", label: "Live", icon: Radio, match: (p) => p.startsWith("/live") },
   { href: "/watch", label: "Multistream", icon: MonitorPlay, match: (p) => p.startsWith("/watch") },
   { href: "/social/search", label: "Search", icon: Search, match: (p) => p.startsWith("/social/search") },
   { href: "/settings", label: "Settings", icon: Settings, match: (p) => p.startsWith("/settings") },
 ];
 
-const MOBILE = ["City", "Following", "News", "Live", "Multistream"];
+const MOBILE = ["City", "News", "Map", "Live", "Multistream"];
 
 function Nav({ mobile, compact }: { mobile?: boolean; compact?: boolean }) {
   const pathname = usePathname();
@@ -87,8 +88,8 @@ function Logo() {
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
-  // Multistream needs the whole viewport: icon rail, no right column.
-  if (pathname.startsWith("/watch")) {
+  // Multistream and the map need the whole viewport: icon rail, no right column.
+  if (pathname.startsWith("/watch") || pathname.startsWith("/map")) {
     return (
       <div className="flex h-dvh">
         <aside className="hidden w-16 shrink-0 flex-col items-center gap-1 border-r border-line py-3 md:flex">

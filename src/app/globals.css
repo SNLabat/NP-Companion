@@ -79,3 +79,73 @@ body {
 .no-scrollbar {
   scrollbar-width: none;
 }
+
+/* ---------- map ---------- */
+.np-map {
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+.np-map .leaflet-control-zoom a {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
+}
+.np-map-region span,
+.np-map-district span {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  pointer-events: none;
+  text-shadow: 0 0 3px var(--bg), 0 0 6px var(--bg);
+}
+.np-map-region span {
+  font-family: var(--font-barlow), sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.np-map-district span {
+  transform: translate(-50%, 15px); /* sit under any pin at the same point */
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+/* region names when zoomed out, district names when zoomed in */
+.np-map:is([data-zoom="-2"], [data-zoom="-1"], [data-zoom="0"], [data-zoom="1"]) .np-map-region,
+.np-map:is([data-zoom="-5"], [data-zoom="-4"], [data-zoom="-3"]) .np-map-district {
+  display: none;
+}
+.np-map-pin span {
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--c);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 30%, transparent), 0 2px 6px rgb(0 0 0 / 0.35);
+  transition: transform 0.15s;
+  cursor: pointer;
+}
+.np-map-pin span:hover {
+  transform: scale(1.12);
+}
+.np-map-pin span.is-area {
+  border-style: dashed;
+}
+.np-map-pin span.is-selected {
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--c) 45%, transparent), 0 4px 12px rgb(0 0 0 / 0.45);
+}
+.leaflet-tooltip.np-map-tip {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  box-shadow: none;
+  font-size: 12px;
+  font-weight: 600;
+}
+.leaflet-tooltip.np-map-tip::before {
+  display: none;
+}

@@ -31,6 +31,16 @@ Watch up to 12 Twitch or Kick POVs at once.
 - Add POVs from the live NoPixel list or by name. LIVE badges, the live rail, and profile banners open the stream here.
 - Players are positioned absolutely and never re-ordered in the DOM, so changing layouts never reloads a stream.
 
+## City map (`/map`)
+
+A map of Los Santos and Blaine County with events pinned where they happened.
+
+- **Base map**: our own schematic (coastline, Alamo Sea, city area, region and district labels) drawn as vectors in GTA V world coordinates from `src/data/map-base.ts`. No third-party map imagery is bundled. To use a detailed map image you have rights to, set `NEXT_PUBLIC_MAP_IMAGE_URL` and `NEXT_PUBLIC_MAP_IMAGE_BOUNDS` (`minX,minY,maxX,maxY` in world coordinates of the image edges).
+- **Places**: `src/data/places.ts` is a hand-curated list of landmarks and districts with approximate world coordinates. It powers place search and geocoding. Names that are also everyday words or surnames (Davis, Harmony, Strawberry) are marked `ambiguous` and only match in a story's dateline.
+- **Events**: `/api/map` returns a `MapFeed` from a pluggable `MapSource` (`src/lib/map/sources.ts`, selected with `MAP_SOURCE`). The default `news` source pins city news by the landmark in its headline, its dateline ("SANDY SHORES —"), or places named in the body. Landmark matches pin precisely; district matches draw a dashed "general area" circle. Stories with no recognizable place are listed under "No location found".
+- **Swapping in real data**: an adapter that returns `MapFeed` (events with `x`, `y`, `kind`, `people`, etc.) can replace the news source, e.g. the official Companion map events if access is granted. The UI already handles kinds such as `crime`, `warrant` and `government`.
+- **Sharing**: `/map?focus=<eventId>` and `/map?place=<placeKey>` open the map on that event or place. "Read in News" links jump to the story on `/news`.
+
 ## Architecture
 
 ```

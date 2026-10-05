@@ -19,7 +19,8 @@ import {
 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { useLive, useSettings } from "@/components/providers";
+import { useLive } from "@/components/providers";
+import { useIsDark } from "@/components/use-is-dark";
 import { n } from "@/lib/format";
 import {
   fitGrid,
@@ -75,19 +76,6 @@ function useWatchState() {
   );
 
   return { povs, layout, mainId, chatId, update };
-}
-
-function useIsDark() {
-  const { theme } = useSettings();
-  const [systemDark, setSystemDark] = useState(true);
-  useEffect(() => {
-    const mq = matchMedia("(prefers-color-scheme: dark)");
-    const on = () => setSystemDark(mq.matches);
-    on();
-    mq.addEventListener("change", on);
-    return () => mq.removeEventListener("change", on);
-  }, []);
-  return theme === "dark" || (theme === "system" && systemDark);
 }
 
 /* ---------------- view ---------------- */

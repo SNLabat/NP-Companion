@@ -12,6 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${base}/news`, changeFrequency: "hourly", priority: 0.8 },
     { url: `${base}/live`, changeFrequency: "always", priority: 0.6 },
     { url: `${base}/watch`, changeFrequency: "always", priority: 0.7 },
+    { url: `${base}/map`, changeFrequency: "hourly", priority: 0.7 },
   ];
   try {
     const src = getSource();
