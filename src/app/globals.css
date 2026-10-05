@@ -112,8 +112,8 @@ body {
   text-transform: uppercase;
 }
 /* region names when zoomed out, district names when zoomed in */
-.np-map:is([data-zoom="-2"], [data-zoom="-1"], [data-zoom="0"], [data-zoom="1"]) .np-map-region,
-.np-map:is([data-zoom="-5"], [data-zoom="-4"], [data-zoom="-3"]) .np-map-district {
+.np-map:is([data-zoom="5"], [data-zoom="6"], [data-zoom="7"], [data-zoom="8"], [data-zoom="9"]) .np-map-region,
+.np-map:is([data-zoom="2"], [data-zoom="3"], [data-zoom="4"]) .np-map-district {
   display: none;
 }
 .np-map-pin span {

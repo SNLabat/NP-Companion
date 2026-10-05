@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { PLACE_BY_KEY, PLACES } from "@/data/places";
-import { type FlyTarget, GameMap, kindColor, type MarkerGroup } from "@/components/map/game-map";
+import { type FlyTarget, GameMap, kindColor, type MarkerGroup, ZOOM } from "@/components/map/game-map";
 import { useIsDark } from "@/components/use-is-dark";
 import { useNow } from "@/components/use-now";
 import { fetchJson, fullDate, shortAgo } from "@/lib/format";
@@ -96,7 +96,7 @@ export function MapView() {
     (e: MapEvent, push = true) => {
       setSelected(groupKey(e));
       setHighlight(null);
-      setFly({ x: e.x, y: e.y, zoom: e.precision === "area" ? -2.5 : -1.75, nonce: Date.now() });
+      setFly({ x: e.x, y: e.y, zoom: e.precision === "area" ? ZOOM.area : ZOOM.event, nonce: Date.now() });
       if (push) setUrl("focus", e.id);
     },
     [setUrl],
@@ -106,7 +106,7 @@ export function MapView() {
     (p: Place, push = true) => {
       setSelected(null);
       setHighlight(p);
-      setFly({ x: p.x, y: p.y, zoom: p.kind === "district" ? -2.5 : -1.5, nonce: Date.now() });
+      setFly({ x: p.x, y: p.y, zoom: p.kind === "district" ? ZOOM.area : ZOOM.place, nonce: Date.now() });
       if (push) setUrl("place", p.key);
     },
     [setUrl],
