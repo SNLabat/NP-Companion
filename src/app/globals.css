@@ -149,3 +149,18 @@ body {
 .leaflet-tooltip.np-map-tip::before {
   display: none;
 }
+
+/* raster tiles: hide hairline seams at fractional zoom, and use light halos on the bright atlas */
+.np-map.has-tiles img.leaflet-tile {
+  mix-blend-mode: normal; /* Leaflet's plus-lighter brightens seams over a non-black base */
+  width: 256.5px !important; /* half-pixel overlap hides hairline gaps at fractional zoom */
+  height: 256.5px !important;
+}
+.np-map.has-tiles .np-map-region span,
+.np-map.has-tiles .np-map-district span {
+  color: #24313b !important;
+  text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 8px rgb(255 255 255 / 0.8);
+}
+.np-map.has-tiles .np-map-region span {
+  opacity: 0.75;
+}

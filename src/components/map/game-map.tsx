@@ -51,13 +51,15 @@ const TILES_URL = process.env.NEXT_PUBLIC_MAP_TILES_URL;
 const NATIVE_ZOOM = Number(process.env.NEXT_PUBLIC_MAP_TILES_ZOOM ?? 8);
 const parsed = process.env.NEXT_PUBLIC_MAP_TRANSFORM?.split(",").map(Number);
 const TRANSFORM =
-  parsed?.length === 4 && parsed.every(Number.isFinite) ? parsed : [2, 32768, -2, 32768]; // default: 2 px/unit at z8
+  parsed?.length === 4 && parsed.every(Number.isFinite) ? parsed : [1.853, 31829, -1.853, 40034]; // calibrated to the standard GTA V atlas at z8
 const HAS_TILES = Boolean(TILES_URL);
 
 /** Zoom levels used across the map UI (in tile-zoom units). */
+export const MAP_HAS_TILES = HAS_TILES;
+
 export const ZOOM = {
   min: 2,
-  max: HAS_TILES ? NATIVE_ZOOM + 1 : 6, // the schematic has no detail past 6
+  max: HAS_TILES ? NATIVE_ZOOM : 6, // the schematic has no detail past 6
   place: 5.5,
   event: 5.25,
   area: 4.5,
@@ -168,7 +170,7 @@ export function GameMap({
       if (IMAGE_URL && IMAGE_BOUNDS?.length === 4 && IMAGE_BOUNDS.every(Number.isFinite)) {
         const [x0, y0, x1, y1] = IMAGE_BOUNDS;
         Lf.imageOverlay(IMAGE_URL, Lf.latLngBounds(ll(x0, y0), ll(x1, y1))).addTo(layer);
-      } else {
+      } else if (!HAS_TILES) {
         const pane = "base";
         Lf.polygon(poly(COAST), { pane, color: c.landLine, weight: 1.5, fillColor: c.land, fillOpacity: 1, interactive: false, smoothFactor: 2 }).addTo(layer);
         Lf.polygon(poly(CITY), { pane, stroke: false, fillColor: c.city, fillOpacity: 1, interactive: false, smoothFactor: 2 }).addTo(layer);
@@ -176,7 +178,7 @@ export function GameMap({
           Lf.polygon(poly(lake), { pane, color: c.landLine, weight: 1, fillColor: c.lake, fillOpacity: 1, interactive: false }).addTo(layer);
       }
 
-      for (const r of REGIONS) {
+      for (const r of REGIONS.filter((r) => !HAS_TILES || !/ocean/i.test(r.name))) {
         Lf.marker(ll(r.x, r.y), {
           interactive: false,
           keyboard: false,
@@ -266,5 +268,7 @@ export function GameMap({
     });
   }, [fly]);
 
-  return <div ref={el} className="np-map size-full" role="application" aria-label="Map of the city" />;
+  return (
+    <div ref={el} className={`np-map size-full${HAS_TILES ? " has-tiles" : ""}`} role="application" aria-label="Map of the city" />
+  );
 }

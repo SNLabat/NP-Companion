@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { PLACE_BY_KEY, PLACES } from "@/data/places";
-import { type FlyTarget, GameMap, kindColor, type MarkerGroup, ZOOM } from "@/components/map/game-map";
+import { type FlyTarget, GameMap, kindColor, MAP_HAS_TILES, type MarkerGroup, ZOOM } from "@/components/map/game-map";
 import { useIsDark } from "@/components/use-is-dark";
 import { useNow } from "@/components/use-now";
 import { fetchJson, fullDate, shortAgo } from "@/lib/format";
@@ -165,8 +165,8 @@ export function MapView() {
             <p className="mt-1 hidden items-start gap-1.5 text-xs text-muted sm:flex">
               <Info size={13} className="mt-px shrink-0" />
               <span>
-                {data?.sourceLabel ?? "Loading events…"}. Schematic map; positions are approximate. Live player positions
-                aren&apos;t available yet.
+                {data?.sourceLabel ?? "Loading events…"}. {MAP_HAS_TILES ? "" : "Schematic map; "}Positions are approximate.
+                Live player positions aren&apos;t available yet.
               </span>
             </p>
           </div>

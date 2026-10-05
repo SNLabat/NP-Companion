@@ -22,7 +22,7 @@ export const PLACES: Place[] = [
   { key: "burgershot", name: "Burger Shot", kind: "landmark", x: -1183, y: -884, aliases: ["Burger Shot", "Burgershot"] },
   { key: "unicorn", name: "Vanilla Unicorn", kind: "landmark", x: 127, y: -1300, aliases: ["Vanilla Unicorn", "Unicorn"] },
   { key: "tequilala", name: "Tequi-la-la", kind: "landmark", x: -560, y: 286, aliases: ["Tequi-la-la", "Tequilala"] },
-  { key: "pier", name: "Del Perro Pier", kind: "landmark", x: -1850, y: -1230, aliases: ["Del Perro Pier", "the pier"] },
+  { key: "pier", name: "Del Perro Pier", kind: "landmark", x: -1620, y: -1050, aliases: ["Del Perro Pier", "the pier"] },
   { key: "lsia", name: "Los Santos International Airport", kind: "landmark", x: -1037, y: -2738, aliases: ["LSIA", "airport"] },
   { key: "port", name: "Port of Los Santos", kind: "landmark", x: 1000, y: -3000, aliases: ["Port of Los Santos", "the docks", "Elysian Island"] },
   { key: "grove", name: "Grove Street", kind: "landmark", x: 105, y: -1940, aliases: ["Grove Street", "Grove St"] },
@@ -36,7 +36,7 @@ export const PLACES: Place[] = [
   { key: "zancudo", name: "Fort Zancudo", kind: "landmark", x: -2047, y: 3132, aliases: ["Fort Zancudo", "Zancudo"] },
   { key: "chiliad", name: "Mount Chiliad", kind: "landmark", x: 501, y: 5604, aliases: ["Mount Chiliad", "Chiliad"] },
   { key: "humane", name: "Humane Labs", kind: "landmark", x: 3600, y: 3700, aliases: ["Humane Labs"] },
-  { key: "alamodock", name: "Alamo Sea Boat Dock", kind: "landmark", x: 1300, y: 4220, aliases: ["Alamo Sea Boat Dock", "Alamo Sea Dock", "Alamo Dock"] },
+  { key: "alamodock", name: "Alamo Sea Boat Dock", kind: "landmark", x: 1180, y: 3900, aliases: ["Alamo Sea Boat Dock", "Alamo Sea Dock", "Alamo Dock"] },
 
   // ---- districts / towns (area precision) ----
   { key: "downtown", name: "Downtown Los Santos", kind: "district", x: 150, y: -800, aliases: ["Downtown LS", "Pillbox Hill"] },
